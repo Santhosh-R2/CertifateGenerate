@@ -15,6 +15,7 @@ function App() {
   const [templateImage, setTemplateImage] = useState(null);
   const [certificateFields, setCertificateFields] = useState({});
   const [importedData, setImportedData] = useState([]);
+  const [issueDate, setIssueDate] = useState(new Date().toISOString().split('T')[0]);
 
   // Sync auth state to localStorage
   useEffect(() => {
@@ -165,6 +166,7 @@ function App() {
                 certificateFields={certificateFields}
                 setCertificateFields={setCertificateFields}
                 showOnly="preview"
+                issueDate={issueDate}
               />
             </div>
             <div className="calibration-sidebar">
@@ -174,6 +176,8 @@ function App() {
                 certificateFields={certificateFields}
                 setCertificateFields={setCertificateFields}
                 showOnly="settings"
+                issueDate={issueDate}
+                setIssueDate={setIssueDate}
               />
               <div className="settings-footer">
                 <button 
@@ -246,6 +250,7 @@ function App() {
                     templateImage={templateImage}
                     data={importedData}
                     certificateFields={certificateFields}
+                    issueDate={issueDate}
                   />
                   
                   <button onClick={() => setCurrentStep(1)} className="btn-back-link">

@@ -7,7 +7,9 @@ export default function TemplateEditor({
   setTemplateImage,
   certificateFields,
   setCertificateFields,
-  showOnly
+  showOnly,
+  issueDate,
+  setIssueDate
 }) {
   const containerRef = useRef(null);
   const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
@@ -56,10 +58,11 @@ export default function TemplateEditor({
         xPct: 50,
         yPct: 50,
         fontSize: 32,
-        fontFamily: 'Outfit',
+        fontFamily: 'outfit',
         fontWeight: 'bold',
         align: 'center',
-        color: '#000000'
+        color: '#000000',
+        source: 'data'
       }
     }));
     setNewFieldName('');
@@ -95,7 +98,18 @@ export default function TemplateEditor({
       case 'times': return '"Times New Roman", Times, serif';
       case 'helvetica': return 'Arial, Helvetica, sans-serif';
       case 'courier': return '"Courier New", Courier, monospace';
-      case 'outfit': return 'var(--font-main)';
+      case 'outfit': return '"Outfit", sans-serif';
+      case 'montserrat': return '"Montserrat", sans-serif';
+      case 'playfair': return '"Playfair Display", serif';
+      case 'great-vibes': return '"Great Vibes", cursive';
+      case 'dancing-script': return '"Dancing Script", cursive';
+      case 'eb-garamond': return '"EB Garamond", serif';
+      case 'inter': return '"Inter", sans-serif';
+      case 'cinzel': return '"Cinzel", serif';
+      case 'libre-baskerville': return '"Libre Baskerville", serif';
+      case 'alex-brush': return '"Alex Brush", cursive';
+      case 'pinyon-script': return '"Pinyon Script", cursive';
+      case 'cormorant': return '"Cormorant Garamond", serif';
       default: return 'var(--font-main)';
     }
   };
@@ -111,6 +125,21 @@ export default function TemplateEditor({
              <h3 className="properties-title">PROPERTIES</h3>
              <p className="properties-subtitle">Field Calibration</p>
            </div>
+        </div>
+
+        <div style={{ marginBottom: '2.5rem', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '0.75rem', border: '1px solid var(--border-strong)' }}>
+          <label className="control-group-title">SYSTEM CONSTANTS</label>
+          <div style={{ marginTop: '0.75rem' }}>
+            <label className="label-nano">ISSUE DATE (GLOBAL)</label>
+            <div className="date-picker-lux">
+              <input 
+                type="date" 
+                value={issueDate} 
+                onChange={(e) => setIssueDate(e.target.value)} 
+                className="input-sm date-input"
+              />
+            </div>
+          </div>
         </div>
 
         <div style={{ marginBottom: '2rem' }}>
@@ -158,17 +187,43 @@ export default function TemplateEditor({
                   </div>
                 </div>
 
-                <div className="field-card-content">
-                  <div className="field-col-full">
-                     <label className="label-nano">DEFAULT BOUND TRACE</label>
-                     <input
-                      type="text"
-                      placeholder="Simulation text..."
-                      value={field.text}
-                      onChange={(e) => updateField(key, 'text', e.target.value)}
-                      className="input-sm"
-                    />
-                  </div>
+                  <div className="field-card-content">
+                    <div className="field-col-full">
+                       <label className="label-nano">DATA SOURCE</label>
+                       <div className="source-toggle-group">
+                         <button 
+                           className={`btn-toggle-sm ${field.source !== 'system_date' ? 'active' : ''}`}
+                           onClick={() => updateField(key, 'source', 'data')}
+                         >
+                           EXCEL DATA
+                         </button>
+                         <button 
+                           className={`btn-toggle-sm ${field.source === 'system_date' ? 'active' : ''}`}
+                           onClick={() => updateField(key, 'source', 'system_date')}
+                         >
+                           GLOBAL DATE
+                         </button>
+                       </div>
+                    </div>
+                    
+                    <div className="field-col-full">
+                       {field.source !== 'system_date' ? (
+                         <>
+                           <label className="label-nano">EXCEL COLUMN MAPPING</label>
+                           <input
+                            type="text"
+                            placeholder="e.g. name, technology, etc."
+                            value={field.text}
+                            onChange={(e) => updateField(key, 'text', e.target.value)}
+                            className="input-sm"
+                          />
+                         </>
+                       ) : (
+                         <div className="info-box-sm">
+                           Using system date: <span style={{ color: 'var(--accent-indigo)', fontWeight: 'bold' }}>{issueDate}</span>
+                         </div>
+                       )}
+                    </div>
                   
                   <div>
                     <label className="label-nano">TYPOGRAPHY</label>
@@ -177,10 +232,29 @@ export default function TemplateEditor({
                       onChange={(e) => updateField(key, 'fontFamily', e.target.value)}
                       className="input-sm"
                     >
-                      <option value="times">Times Roman</option>
-                      <option value="helvetica">Helvetica / Arial</option>
-                      <option value="courier">Courier Mono</option>
-                      <option value="outfit">Outfit Modern</option>
+                      <optgroup label="Standard System">
+                        <option value="helvetica">Helvetica / Arial</option>
+                        <option value="times">Times New Roman</option>
+                        <option value="courier">Courier Mono</option>
+                      </optgroup>
+                      <optgroup label="Modern Sans">
+                        <option value="outfit">Outfit Modern</option>
+                        <option value="inter">Inter UI</option>
+                        <option value="montserrat">Montserrat</option>
+                      </optgroup>
+                      <optgroup label="Elegant Serif">
+                        <option value="playfair">Playfair Display</option>
+                        <option value="eb-garamond">EB Garamond</option>
+                        <option value="cinzel">Cinzel Decorative</option>
+                        <option value="libre-baskerville">Libre Baskerville</option>
+                        <option value="cormorant">Cormorant Garamond</option>
+                      </optgroup>
+                      <optgroup label="Artistic Script">
+                        <option value="great-vibes">Great Vibes</option>
+                        <option value="dancing-script">Dancing Script</option>
+                        <option value="alex-brush">Alex Brush</option>
+                        <option value="pinyon-script">Pinyon Script</option>
+                      </optgroup>
                     </select>
                   </div>
 
@@ -248,6 +322,7 @@ export default function TemplateEditor({
                 scaleRatio={scaleRatio}
                 handleDrag={handleDrag}
                 getCssFontFamily={getCssFontFamily}
+                issueDate={issueDate}
               />
             ))}
           </div>
@@ -255,20 +330,20 @@ export default function TemplateEditor({
           <div style={{ padding: '8rem', textAlign: 'center', color: 'var(--text-muted)' }}>NO CANVAS ACTIVE</div>
         )}
       </div>
-      {templateImage && (
+      {/* {templateImage && (
         <div className="stage-status-text">
           <p className="stage-status-primary">
             <Crosshair size={14} /> PRECISION GRID ONLINE
           </p>
           <p className="stage-status-secondary">Translate variables to mathematical absolute coordinates.</p>
         </div>
-      )}
+      )} */}
     </>
   );
 }
 
 // Sub-component to manage its own nodeRef for react-draggable (React 18 fix)
-const DraggableTag = ({ fieldKey, field, containerSize, scaleRatio, handleDrag, getCssFontFamily }) => {
+const DraggableTag = ({ fieldKey, field, containerSize, scaleRatio, handleDrag, getCssFontFamily, issueDate }) => {
   const nodeRef = useRef(null);
   const responsiveFontSize = Math.max(12, field.fontSize * scaleRatio);
   const xPos = (field.xPct / 100) * containerSize.width;
@@ -301,7 +376,7 @@ const DraggableTag = ({ fieldKey, field, containerSize, scaleRatio, handleDrag, 
             <div className="crosshair-v"></div>
             <div className="crosshair-dot"></div>
           </div>
-          {field.text || `[${field.label.toUpperCase()}]`}
+          {field.source === 'system_date' ? issueDate : (field.text || `[${field.label.toUpperCase()}]`)}
         </div>
       </div>
     </Draggable>

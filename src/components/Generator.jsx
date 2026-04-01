@@ -4,7 +4,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { Loader2, Download, Hexagon } from 'lucide-react';
 
-export default function Generator({ templateImage, data, certificateFields }) {
+export default function Generator({ templateImage, data, certificateFields, issueDate }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState({ current: 0, total: 0 });
 
@@ -22,7 +22,18 @@ export default function Generator({ templateImage, data, certificateFields }) {
     'times': 'times',
     'helvetica': 'helvetica',
     'courier': 'courier',
-    'outfit': 'helvetica' // jsPDF fallback since custom fonts require VFS
+    'outfit': 'helvetica',
+    'inter': 'helvetica',
+    'montserrat': 'helvetica',
+    'playfair': 'times',
+    'eb-garamond': 'times',
+    'cinzel': 'times',
+    'libre-baskerville': 'times',
+    'cormorant': 'times',
+    'great-vibes': 'times',
+    'dancing-script': 'times',
+    'alex-brush': 'times',
+    'pinyon-script': 'times'
   };
 
   const handleGenerate = async () => {
@@ -58,7 +69,7 @@ export default function Generator({ templateImage, data, certificateFields }) {
             doc.addImage(img, 'PNG', 0, 0, ptWidth, ptHeight);
 
             Object.entries(certificateFields).forEach(([key, config]) => {
-              const textStr = String(item[key] || item[config.label?.toLowerCase()] || '');
+              const textStr = config.source === 'system_date' ? issueDate : String(item[key] || item[config.label?.toLowerCase()] || '');
               if (!textStr) return;
 
               let x = (config.xPct / 100) * ptWidth;
