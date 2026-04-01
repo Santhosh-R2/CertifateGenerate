@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import TemplateEditor from './components/TemplateEditor';
 import DataImporter from './components/DataImporter';
 import Generator from './components/Generator';
+import Login from './components/Login';
 import { Award, UploadCloud, Crosshair, Users, Zap, CheckCircle2 } from 'lucide-react';
 import './App.css'; 
 import './index.css';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [templateImage, setTemplateImage] = useState(null);
   const [certificateFields, setCertificateFields] = useState({});
@@ -38,7 +40,11 @@ function App() {
         <div className="ambient-orb-secondary" />
       </div>
 
-      <header className="app-header">
+      {!isAuthenticated ? (
+        <Login onLogin={() => setIsAuthenticated(true)} />
+      ) : (
+        <>
+          <header className="app-header">
         <div className="header-container">
           <div className="logo-wrapper">
             <div className="logo-icon">
@@ -234,6 +240,8 @@ function App() {
           </div>
         )}
       </main>
+        </>
+      )}
     </div>
   );
 }
