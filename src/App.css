@@ -195,6 +195,26 @@ input, select {
   .stepper-nav { display: flex; }
 }
 
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  background-color: rgba(244, 63, 94, 0.1);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background-color: rgba(244, 63, 94, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
+}
+
 .step-button {
   display: flex;
   align-items: center;
@@ -203,11 +223,12 @@ input, select {
 }
 
 .step-button:hover:not(.is-locked) {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .step-button.is-locked {
-  opacity: 0.3;
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .step-circle {
@@ -234,9 +255,9 @@ input, select {
 }
 
 .step-circle.is-pending {
-  border-color: #1e293b;
+  border-color: #475569;
   background-color: #0f172a;
-  color: #64748b;
+  color: #cbd5e1;
 }
 
 .step-label-wrapper {
@@ -246,20 +267,46 @@ input, select {
 }
 
 .step-id {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  transition: color 0.3s;
 }
-.step-id.active { color: #818cf8; }
-.step-id.completed { color: #cbd5e1; }
-.step-id.pending { color: #64748b; }
+
+.step-id.is-active { 
+  color: var(--accent-indigo); 
+}
+
+.step-id.is-completed { 
+  color: #94a3b8; 
+}
+
+.step-id.is-pending { 
+  color: #475569; 
+}
 
 .step-desc {
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  color: #475569;
   text-transform: uppercase;
+  transition: color 0.3s;
+  margin-top: 2px;
+}
+
+.is-active + .step-desc,
+.step-button:not(.is-locked) .step-desc {
+  color: #ffffff;
+}
+
+.is-completed + .step-desc {
+  color: #94a3b8;
+}
+
+.is-pending + .step-desc {
+  color: #334155;
 }
 
 /* =========================================
@@ -1484,11 +1531,12 @@ select.input-sm { appearance: none; }
 }
 
 .login-input-group label {
-  font-size: 0.625rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  color: #f1f5f9;
   text-transform: uppercase;
+  margin-bottom: 0.25rem;
 }
 
 .login-input-wrapper {
@@ -1500,15 +1548,15 @@ select.input-sm { appearance: none; }
 .login-input-icon {
   position: absolute;
   left: 1rem;
-  color: #64748b;
+  color: #cbd5e1;
   pointer-events: none;
 }
 
 .login-input-wrapper input {
   width: 100%;
-  padding: 1rem 3rem 1rem 3rem;
-  background-color: rgba(15, 23, 42, 0.5);
-  border: 1px solid #1e293b;
+  padding: 1rem 3.5rem 1rem 3rem;
+  background-color: rgba(30, 41, 59, 0.4);
+  border: 1px solid #334155;
   border-radius: 0.75rem;
   color: white;
   font-size: 0.875rem;
@@ -1524,7 +1572,7 @@ select.input-sm { appearance: none; }
 }
 
 .login-input-wrapper input::placeholder {
-  color: #475569;
+  color: #71717a;
 }
 
 .login-input-wrapper input:disabled {
@@ -1565,19 +1613,20 @@ select.input-sm { appearance: none; }
 .login-footer p {
   font-size: 0.625rem;
   font-weight: 600;
-  color: #475569;
+  color: #94a3b8;
 }
 
 .login-password-toggle {
   position: absolute;
-  right: 1rem;
-  color: #64748b;
+  right: 1.25rem;
+  color: #f1f5f9;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.3s, transform 0.2s;
+  transition: all 0.3s, transform 0.2s;
   border-radius: 0.25rem;
   padding: 0.25rem;
+  z-index: 10;
 }
 
 .login-password-toggle:hover {
