@@ -127,9 +127,9 @@ export default function TemplateEditor({
            </div>
         </div>
 
-        <div style={{ marginBottom: '2.5rem', padding: '1rem', background: 'rgba(255,255,255,0.02)', borderRadius: '0.75rem', border: '1px solid var(--border-strong)' }}>
+        <div className="settings-section">
           <label className="control-group-title">SYSTEM CONSTANTS</label>
-          <div style={{ marginTop: '0.75rem' }}>
+          <div className="settings-item">
             <label className="label-nano">ISSUE DATE (GLOBAL)</label>
             <div className="date-picker-lux">
               <input 
@@ -142,7 +142,7 @@ export default function TemplateEditor({
           </div>
         </div>
 
-        <div style={{ marginBottom: '2rem' }}>
+        <div className="settings-group">
           <label className="control-group-title">INITIALIZE NEW MARKER</label>
           <div className="control-row">
             <input
@@ -327,7 +327,7 @@ export default function TemplateEditor({
             ))}
           </div>
         ) : (
-          <div style={{ padding: '8rem', textAlign: 'center', color: 'var(--text-muted)' }}>NO CANVAS ACTIVE</div>
+          <div className="canvas-empty-state">NO CANVAS ACTIVE</div>
         )}
       </div>
       {/* {templateImage && (

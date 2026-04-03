@@ -123,7 +123,7 @@ export default function Generator({ templateImage, data, certificateFields, issu
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+    <div className="generator-container">
       {isGenerating && (
         <div className="progress-card">
           <div className="progress-header">
@@ -153,7 +153,7 @@ export default function Generator({ templateImage, data, certificateFields, issu
         <div className="btn-execute-shine"></div>
         {isGenerating ? (
           <>
-            <Hexagon size={24} className="icon-spin" style={{ color: 'rgba(255,255,255,0.5)' }} /> EXECUTING RENDER PIPELINE
+            <Hexagon size={24} className="icon-spin execution-loading-icon" /> EXECUTING RENDER PIPELINE
           </>
         ) : (
           <>

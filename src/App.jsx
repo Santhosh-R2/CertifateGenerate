@@ -95,6 +95,11 @@ function App() {
                )
             })}
           </div>
+
+          <div className="mobile-step-pill">
+            <span className="mobile-step-count">{currentStep}/4</span>
+            <span className="mobile-step-title">{steps.find(s => s.id === currentStep)?.title}</span>
+          </div>
           
           <button onClick={handleLogout} className="logout-btn" title="Logout Session">
             <LogOut size={18} />

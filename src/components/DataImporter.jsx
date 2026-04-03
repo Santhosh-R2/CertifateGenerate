@@ -36,7 +36,7 @@ export default function DataImporter({ importedData, setImportedData }) {
   return (
     <div className="data-grid-pane">
       <div className="data-grid-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div className="data-grid-header-left">
            <div className="data-grid-icon">
              <Database size={24} />
            </div>
@@ -54,13 +54,13 @@ export default function DataImporter({ importedData, setImportedData }) {
 
       <div className="data-table-area">
         {importedData.length === 0 ? (
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+          <div className="data-empty-wrapper">
             <label className="upload-dropzone-wide group">
               <div className="icon-glow-cyan">
                 <FileSpreadsheet size={40} />
               </div>
-              <h4 className="upload-text-main" style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>INITIALIZE EXCEL/CSV</h4>
-              <p className="upload-text-sub" style={{ marginBottom: '2rem' }}>Data fields must match your configured mapped labels.</p>
+              <h4 className="upload-text-main data-upload-title">INITIALIZE EXCEL/CSV</h4>
+              <p className="upload-text-sub data-upload-subtitle">Data fields must match your configured mapped labels.</p>
               
               <div className="upload-banner">
                  Drag & drop anywhere or click to index filesystem
